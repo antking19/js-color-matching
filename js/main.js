@@ -1,5 +1,6 @@
 import { GAME_STATUS, PAIRS_COUNT, GAME_TIME } from './constants.js'
 import {
+    getColorBackground,
     getColorElementList,
     getColorListElement,
     getInActiveColorList,
@@ -46,6 +47,12 @@ function handleTimerFinish() {
 
 // console.log(getRandomColorPairs(4))
 
+function setColorBackground(color) {
+    const colorBackground = getColorBackground()
+    if (!colorBackground) return
+    colorBackground.style.backgroundColor = color
+}
+
 function handleColorClick(liElement) {
     const shouldBlockList = [GAME_STATUS.BLOCKING, GAME_STATUS.FINISHED].includes(gameStatus)
     const isClicked = liElement.classList.contains('active')
@@ -74,6 +81,8 @@ function handleColorClick(liElement) {
 
             timer.clear()
         }
+
+        setColorBackground(firstColor)
         selections = []
         return
     }
@@ -132,7 +141,7 @@ function resetGame() {
 
     // reset colorList for li element
     initColor()
-
+    setColorBackground('')
     startTimer()
 }
 
